@@ -1,0 +1,24 @@
+String s="Your news feed helps you keep up with recent activity ";
+float c;
+float n=0;
+float col;
+
+void setup(){
+  size(800,400);
+  background(255);
+  textSize(64);
+  }
+
+void draw(){
+  for (int i = 0; i < s.length(); i++) {
+    textSize(floor(random(36,100)));
+char c = s.charAt(i); 
+int cl = int(c); 
+println(cl); 
+col=map(cl,97,122,0,255);
+fill(col);
+noStroke();
+rect(n, 150, 20, 50); 
+n += textWidth(c);
+  }
+}
