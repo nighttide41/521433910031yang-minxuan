@@ -1,0 +1,80 @@
+**通过左右键控制的画图软件：**
+*代码如下*
+
+```java
+float speed = 0;
+float easing = 0.07;
+//boolean press1;
+//boolean press2;
+color rectColor, rColor;
+color rectHighlight, rHighlight;
+
+void setup(){
+  size(600,600);
+  background(0);
+  rectColor=color(#F57979);
+  rectHighlight=color(#F2CBCB);
+  rColor=color(#9369F7);
+  rHighlight=color(#D6C7FA);
+  fill(rectColor);
+  noStroke();
+  rect(20,20,55,35);
+  fill(rColor);
+     noStroke();
+     
+  rect(20,70,55,35);
+}
+
+void draw(){
+    
+  float target = dist(mouseX, mouseY, pmouseX, pmouseY); 
+  speed += (target - speed) * easing; 
+  if (mouseButton == LEFT) {
+strokeWeight(speed/2);
+    stroke(rectColor);
+  line(pmouseX,pmouseY,mouseX,mouseY);
+  fill(rectColor);
+  noStroke();
+  ellipse(width/2,30,20,20);
+  ellipseMode(CENTER);
+  fill(rectHighlight);
+  noStroke();
+  rect(20,20,55,35);}else{
+    fill(rectColor);
+  noStroke();
+  rect(20,20,55,35);
+
+  }
+   if (mouseButton == RIGHT) {
+strokeWeight(speed/2);
+    stroke(rColor);
+  line(pmouseX,pmouseY,mouseX,mouseY);
+  fill(rColor);
+  noStroke();
+  ellipse(width/2,30,20,20);
+  ellipseMode(CENTER);
+  fill(rHighlight);
+     noStroke();
+     
+  rect(20,70,55,35);}else{
+    fill(rColor);
+     noStroke();
+     
+  rect(20,70,55,35);
+
+  } 
+  saveas();
+}
+
+void saveas(){
+  if((key == 'T')|| (key == 't')){
+     save("exp.tif");
+  }
+}
+```
+
+
+
+*效果如图* [exp.tif](/Users/yangminxuan/Desktop/HW_211021a/exp.tif) 
+
+按下鼠标左键使用一种颜色绘画，按住右键切换为另一种颜色。
