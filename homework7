@@ -1,0 +1,42 @@
+源代码
+
+```java 
+float theta;
+ 
+void setup() {
+  size(500,400);
+  frameRate(7);
+}
+ 
+void draw() {
+  background(#F2E49D);
+  translate(width/2, height);
+  stroke(#2F606C);
+  strokeWeight(5);
+  branch(mouseY/4);
+}
+
+void branch(float len) {
+
+  float theta = random(0,PI/4);
+ 
+  line(0, 0, 0, -len);
+  translate(0, -len);
+  len *= 0.77;
+  if (len > 2) {
+    pushMatrix();
+    rotate(theta);
+    branch(len);
+    popMatrix();
+    pushMatrix();
+    rotate(-theta);
+    branch(len);
+    popMatrix();
+  }
+}
+
+```
+
+示例
+
+<video src="/Users/yangminxuan/Desktop/exp.mp4"></video>
