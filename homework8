@@ -1,0 +1,165 @@
+import java.util.Iterator; 
+
+ArrayList<fallSystem> systems;
+
+void setup() {
+  size(600,600);
+  systems = new ArrayList<fallSystem>();
+  frameRate(random(8,20));
+}
+
+void draw() {
+  background(0,0,90);
+  for (fallSystem s : systems) { 
+    s.run();
+    s.addcoinMove();
+  }
+  
+}
+
+
+
+void mousePressed() {
+  systems.add(new fallSystem(new PVector(mouseX, mouseY)));
+}
+
+coin:
+class Coin {  
+
+ 
+  PVector coin;  
+  
+
+  Coin(PVector coinLocation) { 
+    coin = coinLocation.get();
+  }
+  
+ 
+  void display() {
+    ellipse(coin.x, coin.y,random(5,20),random(5,20));
+  }
+}
+class coinMove{ 
+
+  PVector location;
+  PVector velocity;
+  PVector gravity;
+  PVector acceleration;
+  float lifespan;
+
+  
+  coinMove(PVector l) {  
+    location = l.get();  
+    acceleration = new PVector(0, 0.05);
+    velocity = new PVector(random(-1, 1), random(-2, 0));
+    gravity = new PVector(0, 0.2);
+    lifespan = 255.0;
+  }
+
+  void run() {  
+    update();
+    display();
+  }
+
+  void update() {  
+    velocity.add(acceleration);
+    location.add(velocity);
+    lifespan -= 1.0;
+  }
+
+  void display() {  
+    noStroke();
+    fill(255, 200, 0);
+    Coin coin = new Coin(location);  
+   location.add(velocity); 
+
+velocity.add(gravity); 
+velocity.x = velocity.x * -1;
+
+
+
+if (location.y > height) {
+
+
+location.y = height;
+
+}
+
+
+    coin.display(); 
+  }
+  
+  Boolean isDead(){
+    if(lifespan < 0.0){
+      return true;
+    }else{
+      return false;
+    }
+  }
+}
+class fallSystem {
+
+  ArrayList<coinMove> slist;
+  PVector originLocation;
+
+  fallSystem(PVector location) {
+    originLocation = location.get();
+    slist = new ArrayList<coinMove>();
+  }
+
+  void addcoinMove() {
+    slist.add(new coinMove(originLocation));
+  }
+
+  void run() {
+    Iterator<coinMove> it = slist.iterator();
+
+    while (it.hasNext()) {
+      coinMove s = it.next();
+      s.run();
+      if (s.isDead()) {
+        it.remove();
+      }
+    }
+  }
+}
+
+class DNA {
+
+  // The genetic sequence
+  float[] genes;
+  int len = s.getChildCount()*3;
+  
+  DNA() {
+    genes = new float[len];
+    for (int i = 0; i < genes.length; i++) {
+      genes[i] = random(0,1);
+    }
+  }
+  
+  DNA(float[] newgenes) {
+    genes = newgenes;
+  }
+  
+ 
+  DNA crossover(DNA partner) {
+    float[] child = new float[genes.length];
+    int crossover = int(random(genes.length));
+    for (int i = 0; i < genes.length; i++) {
+      if (i > crossover) child[i] = genes[i];
+      else               child[i] = partner.genes[i];
+    }
+    DNA newgenes = new DNA(child);
+    return newgenes;
+  }
+  
+  
+  void mutate(float m) {
+    for (int i = 0; i < genes.length; i++) {
+      if (random(1) < m) {
+         genes[i] = random(0,1);
+      }
+    }
+  }
+}
+
